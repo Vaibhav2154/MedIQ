@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+sqlalchemy
+pg8000
+python-dotenv
+pytesseract
+Pillow
+pyzbar
+pypdf
+langdetect
+python-multipart

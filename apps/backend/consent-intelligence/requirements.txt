@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+pydantic-ai-slim
+python-dotenv
+sqlalchemy
+pg8000
+python-multipart
+httpx
