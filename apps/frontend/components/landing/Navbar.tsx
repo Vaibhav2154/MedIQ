@@ -1,11 +1,10 @@
 "use client";
 import { useState } from 'react';
 import Link from 'next/link';
-// ADDED MISSING IMPORTS HERE
 import { 
   ChevronDown, Shield, Zap, Lock, Terminal, Building2, 
-  User, Activity, Code, Microscope, Database, Cpu, 
-  BookOpen, CheckCircle, FileText, ShieldCheck 
+  Microscope, Database, Cpu, BookOpen, CheckCircle, 
+  FileText, ArrowRight 
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -30,15 +29,8 @@ export default function Navbar() {
       ] 
     },
     { 
-      name: 'How it Works', 
-      items: [ // ENSURED THIS IS NOT UNDEFINED
-        { title: 'AI Ingestion', desc: 'Converting text to FHIR', icon: <Cpu size={16}/> },
-        { title: 'Policy Mapping', desc: 'Permission-based access control', icon: <BookOpen size={16}/> }
-      ] 
-    },
-    { 
       name: 'Standards', 
-      items: [ // ENSURED THIS IS NOT UNDEFINED
+      items: [
         { title: 'ABDM Alignment', desc: 'M3 & UHI', icon: <CheckCircle size={16}/> },
         { title: 'FHIR v4.0.1', desc: 'Interoperable standards', icon: <FileText size={16}/> }
       ] 
@@ -48,10 +40,13 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-[100] bg-med-green text-white border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-serif text-xl font-bold tracking-tight">
-          <Shield size={24} /> MedTrust
+          <Shield size={24} className="text-white" /> 
+          <span>MedIQ</span>
         </Link>
 
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navigation.map((menu) => (
             <div 
@@ -61,18 +56,17 @@ export default function Navbar() {
               onMouseLeave={() => setActiveMenu(null)}
             >
               <button className="flex items-center gap-1 text-sm font-semibold opacity-90 hover:opacity-100 transition-all">
-                {/* Optional chaining ?.length handles the undefined error safely */}
-                {menu.name} {(menu.items?.length ?? 0) > 0 && <ChevronDown size={14} />}
+                {menu.name} <ChevronDown size={14} className={`transition-transform ${activeMenu === menu.name ? 'rotate-180' : ''}`} />
               </button>
 
-              {activeMenu === menu.name && (menu.items?.length ?? 0) > 0 && (
-                <div className="absolute top-14 left-0 w-72 bg-white rounded-2xl shadow-2xl p-3 text-slate-900">
-                  <div className="absolute -top-1.5 left-6 w-3 h-3 bg-white rotate-45 rounded-sm" />
+              {activeMenu === menu.name && (
+                <div className="absolute top-14 left-0 w-72 bg-white rounded-2xl shadow-2xl p-3 text-slate-900 border border-slate-100">
+                  <div className="absolute -top-1.5 left-6 w-3 h-3 bg-white rotate-45 border-t border-l border-slate-100" />
                   <div className="flex flex-col gap-1 relative z-10">
                     {menu.items.map((item) => (
-                      <Link key={item.title} href="#" className="p-3 hover:bg-slate-50 rounded-xl transition-all">
+                      <Link key={item.title} href="#" className="p-3 hover:bg-slate-50 rounded-xl transition-all group">
                         <div className="flex items-center gap-3">
-                          <div className="text-med-green">{item.icon}</div>
+                          <div className="text-med-green group-hover:scale-110 transition-transform">{item.icon}</div>
                           <div>
                             <p className="font-bold text-sm leading-none mb-1">{item.title}</p>
                             <p className="text-[11px] text-slate-500">{item.desc}</p>
@@ -86,9 +80,15 @@ export default function Navbar() {
             </div>
           ))}
         </div>
-        <button className="bg-white text-med-green px-5 py-2 rounded-xl text-sm font-bold shadow-lg">
-          Try Live Demo
-        </button>
+
+        {/* Auth Buttons */}
+        <div className="flex items-center gap-4">
+          <Link href="/login">
+            <button className="bg-white text-med-green px-5 py-2 rounded-xl text-sm font-bold shadow-lg shadow-black/10 hover:bg-slate-50 transition-all flex items-center gap-2">
+              Login
+            </button>
+          </Link>
+        </div>
       </div>
     </nav>
   );
