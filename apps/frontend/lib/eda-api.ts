@@ -4,7 +4,7 @@ import * as T from '@/types/eda';
 import { ResearchSession, SessionCreate, SessionUpdate, SessionListResponse } from '@/types/session';
 import { ResearcherLogin, ResearcherSignup, TokenResponse } from '@/types/auth';
 
-const API_BASE_URL = 'http://localhost:8005';
+const API_BASE_URL = 'http://localhost:8003';
 
 const api = axios.create({
     baseURL: API_BASE_URL,

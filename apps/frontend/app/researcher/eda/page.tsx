@@ -20,9 +20,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
 // Mock Config for Demo (In real app, columns would be fetched from dataset metadata)
+// Note: The actual health tables (patients, observations, medications) don't have numeric columns
+// suitable for statistical analysis. In a real scenario, you would add numeric fields like age, 
+// blood pressure, glucose levels, etc. For now, using empty arrays to prevent errors.
 const DATASETS = [
-    { id: "123", name: "Clinical Trial A", columns: ["age", "bp", "glucose", "cholesterol"] },
-    { id: "456", name: "Patient Survey B", columns: ["satisfaction", "wait_time", "age"] }
+    {
+        id: "sample-health-metrics",
+        name: "Sample Health Metrics",
+        columns: ["patient_age", "systolic_bp", "diastolic_bp", "heart_rate", "glucose_level", "cholesterol", "bmi", "temperature"]
+    },
+    { id: "patients-dataset", name: "Patient Demographics", columns: [] },
+    { id: "observations-dataset", name: "Clinical Observations", columns: [] },
+    { id: "medications-dataset", name: "Medication Records", columns: [] }
 ];
 
 const FEATURES = [

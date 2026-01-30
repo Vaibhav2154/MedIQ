@@ -37,7 +37,7 @@ def signup(
     
     # Generate access token
     access_token = auth_service.create_access_token(
-        data={"sub": researcher.id, "email": researcher.email, "type": "researcher"}
+        data={"sub": researcher.id, "email": researcher.email, "role": "researcher"}
     )
     
     # Update last login
@@ -77,7 +77,7 @@ def login(
     
     # Generate access token
     access_token = auth_service.create_access_token(
-        data={"sub": researcher.id, "email": researcher.email, "type": "researcher"}
+        data={"sub": researcher.id, "email": researcher.email, "role": "researcher"}
     )
     
     # Update last login

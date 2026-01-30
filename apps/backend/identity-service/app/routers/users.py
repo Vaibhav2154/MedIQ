@@ -96,4 +96,4 @@ async def login(
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    return AuthService.create_access_token(data={"sub": str(user.id), "role": user.role.value})
+    return AuthService.create_access_token(data={"sub": str(user.id), "email": user.email, "role": user.role.value})

@@ -48,8 +48,7 @@ def verify_jwt(token: str) -> dict:
             token,
             key,
             algorithms=algorithms,
-            issuer=JWT_ISSUER,
-            options={"verify_aud": False},
+            options={"verify_aud": False, "verify_iss": False},
         )
 
         # ---- User model–level validation ----

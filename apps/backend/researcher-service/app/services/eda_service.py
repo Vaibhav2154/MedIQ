@@ -35,7 +35,50 @@ class EdaService:
     async def get_summary_stats(self, req: eda_schema.SummaryStatsRequest) -> List[eda_schema.SummaryStatsOutput]:
         table_ref = self._get_table_ref(req.dataset_id)
         results = []
+        
         for col in req.columns:
+            # First, check if the column is numeric
+            type_check_query = text(f"""
+                SELECT data_type 
+                FROM information_schema.columns 
+                WHERE table_schema = :schema 
+                AND table_name = :table 
+                AND column_name = :col
+            """)
+            
+            # Extract schema and table from table_ref (e.g., "public.patients")
+            schema_name, table_name = table_ref.split('.')
+            
+            type_result = self.db.execute(type_check_query, {
+                "schema": schema_name,
+                "table": table_name,
+                "col": col
+            }).fetchone()
+            
+            if not type_result:
+                # Column doesn't exist, skip
+                continue
+            
+            data_type = type_result[0].lower()
+            
+            # Check if column is numeric
+            numeric_types = ['integer', 'bigint', 'smallint', 'decimal', 'numeric', 
+                           'real', 'double precision', 'float', 'money']
+            
+            if data_type not in numeric_types:
+                # Skip non-numeric columns for summary stats
+                results.append({
+                    "column": col,
+                    "min": None,
+                    "max": None,
+                    "mean": None,
+                    "median": None,
+                    "std_dev": None,
+                    "valid_count": 0,
+                    "error": f"Column '{col}' is {data_type}, not numeric"
+                })
+                continue
+            
             # Safe SQL using parameters is tricky with dynamic column/table.
             # We strictly validate column names against dataset_columns in a real scenario.
             # Here trusting input for prototype but using text() carefully.
