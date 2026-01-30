@@ -10,7 +10,6 @@ export default function SignupPage() {
           <p className="mt-2 text-sm text-slate-500">Join the secure medical data network</p>
         </div>
 
-
         <form className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -45,7 +44,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-slate-500 pt-4">
           Already have an account?{" "}
-          <Link href="/login" className="font-bold text-med-green hover:underline">Sign In</Link>
+          <Link href="/client/login" className="font-bold text-med-green hover:underline">Sign In</Link>
         </p>
       </div>
     </div>

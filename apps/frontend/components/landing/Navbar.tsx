@@ -1,39 +1,39 @@
 "use client";
 import { useState } from 'react';
 import Link from 'next/link';
-import { 
-  ChevronDown, Shield, Zap, Lock, Terminal, Building2, 
-  Microscope, Database, Cpu, BookOpen, CheckCircle, 
-  FileText, ArrowRight 
+import {
+  ChevronDown, Shield, Zap, Lock, Terminal, Building2,
+  Microscope, Database, Cpu, BookOpen, CheckCircle,
+  FileText, ArrowRight
 } from 'lucide-react';
 
 export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   const navigation = [
-    { 
-      name: 'Platform', 
+    {
+      name: 'Platform',
       items: [
-        { title: 'Consent Engine', desc: 'AI-powered policy extraction', icon: <Zap size={16}/> },
-        { title: 'Policy Enforcement', desc: 'Machine-readable digital rules', icon: <Lock size={16}/> },
-        { title: 'Audit & Compliance', desc: 'Real-time verifiable trails', icon: <Shield size={16}/> },
-        { title: 'Research Gateway', desc: 'Safe access for investigators', icon: <Terminal size={16}/> }
-      ] 
+        { title: 'Consent Engine', desc: 'AI-powered policy extraction', icon: <Zap size={16} /> },
+        { title: 'Policy Enforcement', desc: 'Machine-readable digital rules', icon: <Lock size={16} /> },
+        { title: 'Audit & Compliance', desc: 'Real-time verifiable trails', icon: <Shield size={16} /> },
+        { title: 'Research Gateway', desc: 'Safe access for investigators', icon: <Terminal size={16} /> }
+      ]
     },
-    { 
-      name: 'Solutions', 
+    {
+      name: 'Solutions',
       items: [
-        { title: 'For Hospitals', desc: 'Automate data exchange', icon: <Building2 size={16}/> },
-        { title: 'For Researchers', desc: 'Compliant data sourcing', icon: <Microscope size={16}/> },
-        { title: 'Health Platforms', desc: 'Infrastructure integration', icon: <Database size={16}/> }
-      ] 
+        { title: 'For Hospitals', desc: 'Automate data exchange', icon: <Building2 size={16} /> },
+        { title: 'For Researchers', desc: 'Compliant data sourcing', icon: <Microscope size={16} /> },
+        { title: 'Health Platforms', desc: 'Infrastructure integration', icon: <Database size={16} /> }
+      ]
     },
-    { 
-      name: 'Standards', 
+    {
+      name: 'Standards',
       items: [
-        { title: 'ABDM Alignment', desc: 'M3 & UHI', icon: <CheckCircle size={16}/> },
-        { title: 'FHIR v4.0.1', desc: 'Interoperable standards', icon: <FileText size={16}/> }
-      ] 
+        { title: 'ABDM Alignment', desc: 'M3 & UHI', icon: <CheckCircle size={16} /> },
+        { title: 'FHIR v4.0.1', desc: 'Interoperable standards', icon: <FileText size={16} /> }
+      ]
     }
   ];
 
@@ -42,15 +42,15 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-serif text-xl font-bold tracking-tight">
-          <Shield size={24} className="text-white" /> 
+          <Shield size={24} className="text-white" />
           <span>MedIQ</span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navigation.map((menu) => (
-            <div 
-              key={menu.name} 
+            <div
+              key={menu.name}
               className="relative py-5"
               onMouseEnter={() => setActiveMenu(menu.name)}
               onMouseLeave={() => setActiveMenu(null)}
@@ -83,9 +83,14 @@ export default function Navbar() {
 
         {/* Auth Buttons */}
         <div className="flex items-center gap-4">
-          <Link href="/login">
+          <Link href="/client/login">
             <button className="bg-white text-med-green px-5 py-2 rounded-xl text-sm font-bold shadow-lg shadow-black/10 hover:bg-slate-50 transition-all flex items-center gap-2">
-              Login
+              Client
+            </button>
+          </Link>
+          <Link href="/researcher">
+            <button className="bg-white text-med-green px-5 py-2 rounded-xl text-sm font-bold shadow-lg shadow-black/10 hover:bg-slate-50 transition-all flex items-center gap-2">
+              Researcher
             </button>
           </Link>
         </div>

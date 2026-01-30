@@ -1,19 +1,22 @@
-import Hero from '@/components/landing/Hero'
-import Engine from '@/components/landing/Engine'
-import Problem from '@/components/landing/Problem'
-import Pipeline from '@/components/landing/Pipeline'
-import Stats from '@/components/landing/Stats'
-import TargetUsers from '@/components/landing/TargetUsers'
+import Navbar from "@/components/landing/Navbar";
+import Hero from "@/components/landing/Hero";
+import Stats from "@/components/landing/Stats";
+import Problem from "@/components/landing/Problem";
+import Engine from "@/components/landing/Engine";
+import Pipeline from "@/components/landing/Pipeline";
+import TargetUsers from "@/components/landing/TargetUsers";
 
-export default function Page() {
+export default function Home() {
   return (
-    <main>
+    <main className="min-h-screen bg-slate-50">
+      <Navbar />
       <Hero />
-      <Engine />
+      
       <Problem />
+      <Engine />
       <Pipeline />
       <Stats />
       <TargetUsers />
     </main>
-  )
+  );
 }

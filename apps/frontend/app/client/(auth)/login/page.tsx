@@ -19,18 +19,18 @@ export default function LoginPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-slate-700">Email Address</label>
-              <input 
-                type="email" 
-                required 
+              <input
+                type="email"
+                required
                 className="w-full mt-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-med-green focus:border-transparent outline-none transition-all"
                 placeholder="doctor@hospital.com"
               />
             </div>
             <div>
               <label className="block text-sm font-semibold text-slate-700">Password</label>
-              <input 
-                type="password" 
-                required 
+              <input
+                type="password"
+                required
                 className="w-full mt-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-med-green focus:border-transparent outline-none transition-all"
                 placeholder="••••••••"
               />
@@ -44,7 +44,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-slate-500">
           Don't have an account?{" "}
-          <Link href="/signup" className="font-bold text-med-green hover:underline">
+          <Link href="/client/signup" className="font-bold text-med-green hover:underline">
             Create an account
           </Link>
         </p>
