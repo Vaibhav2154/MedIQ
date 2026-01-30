@@ -143,7 +143,8 @@ async def handle_access_request(
 
 @router.get("/health")
 def health_check() -> dict:
-    """Health check endpoint."""
+    """Health check endp
+    oint."""
     return {
         "status": "healthy",
         "service": "Consent-Aware Data Router",

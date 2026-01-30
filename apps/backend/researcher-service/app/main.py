@@ -35,9 +35,18 @@ app.add_middleware(
 )
 
 # Include routers
+<<<<<<< Updated upstream
 app.include_router(auth_router, prefix=settings.api_v1_prefix)
 app.include_router(data_access_router, prefix=settings.api_v1_prefix)
 app.include_router(consent_router, prefix=settings.api_v1_prefix)  # Advanced consent-aware router
+=======
+app.include_router(router)
+try:
+    from app.routers.eda_router import router as eda_router
+    app.include_router(eda_router)
+except Exception as e:
+    print(f"Failed to load EDA router: {e}")
+>>>>>>> Stashed changes
 
 @app.get("/")
 def root():
