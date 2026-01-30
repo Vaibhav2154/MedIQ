@@ -1,19 +1,14 @@
-from sqlalchemy import Column, String, Integer, DateTime, Boolean, ForeignKey, Numeric
+from sqlalchemy import Column, String, Integer, DateTime, Numeric
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
 import uuid
 from ..db.session import Base
 
-class Patient(Base):
-    __tablename__ = "patients"
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    abha_id = Column(String, unique=True)
-    created_at = Column(DateTime, server_default=func.now())
-
 class Consent(Base):
     __tablename__ = "consents"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    patient_id = Column(UUID(as_uuid=True), ForeignKey("patients.id"), nullable=False)
+    # Store identity-service patient UUID (no cross-service FK to avoid tight coupling)
+    patient_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     source = Column(String)
     status = Column(String, nullable=False)  # active, revoked, expired
     confidence_score = Column(Numeric(3, 2))

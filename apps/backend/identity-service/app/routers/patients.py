@@ -66,3 +66,36 @@ async def get_patient(
     """
     patient = await patient_service.get_patient_by_id(db, patient_id)
     return PatientRead.model_validate(patient)
+
+
+@router.get(
+    "",
+    response_model=list[PatientRead],
+    summary="List patients",
+    description="List patients with optional pagination via query params: limit, offset."
+)
+async def list_patients(
+    limit: int = 50,
+    offset: int = 0,
+    db: AsyncSession = Depends(get_db)
+) -> list[PatientRead]:
+    patients = await patient_service.list_patients(db, limit=limit, offset=offset)
+    return [PatientRead.model_validate(p) for p in patients]
+
+
+@router.get(
+    "/by-abha/{abha_id}",
+    response_model=PatientRead,
+    summary="Get patient by ABHA ID",
+    description="Retrieve a patient record via ABHA ID."
+)
+async def get_patient_by_abha(
+    abha_id: str,
+    db: AsyncSession = Depends(get_db)
+) -> PatientRead:
+    patient = await patient_service.get_patient_by_abha_id(db, abha_id)
+    if not patient:
+        # Use consistent 404 response shape
+        from fastapi import HTTPException, status
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Patient with ABHA ID {abha_id} not found")
+    return PatientRead.model_validate(patient)

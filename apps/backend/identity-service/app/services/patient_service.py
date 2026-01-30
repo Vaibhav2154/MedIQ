@@ -97,3 +97,28 @@ async def get_patient_by_abha_id(
         select(Patient).where(Patient.abha_id == abha_id)
     )
     return result.scalar_one_or_none()
+
+
+async def list_patients(
+    db: AsyncSession,
+    limit: int = 50,
+    offset: int = 0,
+) -> list[Patient]:
+    """
+    List patients with pagination.
+    
+    Args:
+        db: Database session
+        limit: Max records to return
+        offset: Records to skip
+    
+    Returns:
+        List of Patient objects
+    """
+    result = await db.execute(
+        select(Patient)
+        .order_by(Patient.created_at.desc())
+        .limit(limit)
+        .offset(offset)
+    )
+    return list(result.scalars().all())

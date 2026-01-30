@@ -9,7 +9,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.database import init_db
-from app.routers import users, organizations, patients, patient_records
+from app.routers import (
+    users,
+    organizations,
+    patients,
+    patient_records,
+    encounters,
+    observations,
+    diagnoses,
+    medications,
+)
 
 
 @asynccontextmanager
@@ -53,6 +62,10 @@ app.include_router(users.router, prefix=settings.api_v1_prefix)
 app.include_router(organizations.router, prefix=settings.api_v1_prefix)
 app.include_router(patients.router, prefix=settings.api_v1_prefix)
 app.include_router(patient_records.router, prefix=settings.api_v1_prefix)
+app.include_router(encounters.router, prefix=settings.api_v1_prefix)
+app.include_router(observations.router, prefix=settings.api_v1_prefix)
+app.include_router(diagnoses.router, prefix=settings.api_v1_prefix)
+app.include_router(medications.router, prefix=settings.api_v1_prefix)
 
 
 @app.get("/health", tags=["health"])

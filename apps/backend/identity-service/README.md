@@ -22,7 +22,7 @@ The Identity Service is the **system of record** for:
 
 ❌ Interpret or enforce consent policies  
 ❌ Filter data based on permissions  
-❌ Store actual medical records (only references)  
+✅ Store medical records (encounters, observations, diagnoses, medications)  
 ❌ Handle authentication (trusts API Gateway)  
 
 ## Architecture
@@ -82,6 +82,45 @@ The Identity Service is the **system of record** for:
 - `patient_id` (UUID, FK → patients)
 - `record_type` (String: lab, imaging, prescription, etc.)
 - `record_ref` (String: external EHR/FHIR reference)
+- `created_at`, `updated_at` (Timestamps)
+
+#### `encounters`
+- `id` (UUID, PK)
+- `patient_id` (UUID, FK → patients)
+- `organization_id` (UUID, FK → organizations, nullable)
+- `encounter_type` (String)
+- `reason` (String, nullable)
+- `start_at`, `end_at` (Timestamps)
+- `created_at`, `updated_at` (Timestamps)
+
+#### `observations`
+- `id` (UUID, PK)
+- `patient_id` (UUID, FK → patients)
+- `encounter_id` (UUID, FK → encounters, nullable)
+- `category` (String)
+- `code` (String)
+- `value` (String)
+- `unit` (String, nullable)
+- `effective_at` (Timestamp)
+- `created_at`, `updated_at` (Timestamps)
+
+#### `diagnoses`
+- `id` (UUID, PK)
+- `patient_id` (UUID, FK → patients)
+- `encounter_id` (UUID, FK → encounters, nullable)
+- `code` (String)
+- `description` (String, nullable)
+- `clinical_status` (String)
+- `recorded_at` (Timestamp)
+- `created_at`, `updated_at` (Timestamps)
+
+#### `medications`
+- `id` (UUID, PK)
+- `patient_id` (UUID, FK → patients)
+- `encounter_id` (UUID, FK → encounters, nullable)
+- `name` (String)
+- `dose`, `unit`, `frequency`, `route` (Strings, nullable)
+- `start_at`, `end_at` (Timestamps, nullable)
 - `created_at`, `updated_at` (Timestamps)
 
 #### `audit_logs`
@@ -166,6 +205,22 @@ Once running, access:
 #### Patient Records
 - `POST /api/v1/patients/{id}/records` - Create a record reference
 - `GET /api/v1/patients/{id}/records` - List patient records
+
+#### Encounters
+- `POST /api/v1/patients/{id}/encounters` - Create an encounter
+- `GET /api/v1/patients/{id}/encounters` - List encounters
+
+#### Observations
+- `POST /api/v1/patients/{id}/observations` - Create an observation
+- `GET /api/v1/patients/{id}/observations` - List observations
+
+#### Diagnoses
+- `POST /api/v1/patients/{id}/diagnoses` - Create a diagnosis
+- `GET /api/v1/patients/{id}/diagnoses` - List diagnoses
+
+#### Medications
+- `POST /api/v1/patients/{id}/medications` - Create a medication
+- `GET /api/v1/patients/{id}/medications` - List medications
 
 #### Health
 - `GET /health` - Health check endpoint

@@ -53,5 +53,15 @@ class Settings(BaseSettings):
     # API
     api_v1_prefix: str = Field(default="/api/v1")
 
+    # External Services
+    consent_ingestion_url: str = Field(
+        default="http://localhost:8002",
+        description="Base URL for Consent Ingestion Service"
+    )
+    consent_intelligence_url: str = Field(
+        default="http://localhost:8001",
+        description="Base URL for Consent Intelligence Service"
+    )
+
 
 settings = Settings()
