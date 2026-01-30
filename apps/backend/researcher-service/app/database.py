@@ -47,3 +47,8 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# Import models to ensure they're registered with Base
+# This must be after Base is defined
+from app.models import researcher, data_access_request  # noqa: E402, F401

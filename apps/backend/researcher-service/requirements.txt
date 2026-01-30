@@ -6,3 +6,6 @@ python-jose[cryptography]
 sqlglot
 redis
 pydantic
+passlib[bcrypt]
+pydantic-settings
+python-dotenv

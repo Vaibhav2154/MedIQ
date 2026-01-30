@@ -9,43 +9,48 @@ try:
 except Exception:
     pass
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers.router import router
+from app.routers.auth import router as auth_router
+from app.routers.data_access import router as data_access_router
+from app.routers.router import router as consent_router  # Consent-aware data router
 from app.database import Base, engine
+from app.core.config import settings
 
 # Create all database tables on startup
 Base.metadata.create_all(bind=engine)
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="Consent-Aware Data Router",
-    description="Runtime gatekeeper for healthcare data access with consent validation",
+    title="Researcher Portal Service",
+    description="Self-service portal for researchers to access consent-aware patient data for research purposes",
     version="1.0.0"
 )
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Include routers
-app.include_router(router)
+app.include_router(auth_router, prefix=settings.api_v1_prefix)
+app.include_router(data_access_router, prefix=settings.api_v1_prefix)
+app.include_router(consent_router, prefix=settings.api_v1_prefix)  # Advanced consent-aware router
 
 @app.get("/")
 def root():
     """Root endpoint - service status."""
     return {
-        "service": "Consent-Aware Data Router",
+        "service": "Researcher Portal Service",
         "status": "running",
         "version": "1.0.0",
-        "docs": "/docs"
+        "docs": "/docs",
+        "description": "Self-service portal for researchers to access consent-aware patient data"
     }
 
 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    
