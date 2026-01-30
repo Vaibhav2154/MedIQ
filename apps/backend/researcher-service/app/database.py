@@ -49,6 +49,13 @@ def get_db():
         db.close()
 
 
+# Import all models here so they are registered with Base.metadata
+from app.models.researcher import Researcher  # noqa: F401
+from app.models.data_access_request import DataAccessRequest  # noqa: F401
+from app.models.research_session import ResearchSession  # noqa: F401
+from app.models.session_audit_log import SessionAuditLog  # noqa: F401
+
+
 # Import models to ensure they're registered with Base
 # This must be after Base is defined
 from app.models import researcher, data_access_request  # noqa: E402, F401

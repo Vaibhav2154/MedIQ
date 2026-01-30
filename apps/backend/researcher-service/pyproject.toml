@@ -4,12 +4,14 @@ version = "0.1.0"
 requires-python = ">=3.10"
 
 dependencies = [
-  "fastapi",
+  "fastapi[all]",
   "uvicorn",
   "sqlalchemy",
   "psycopg2-binary",
   "python-jose[cryptography]",
   "sqlglot",
   "redis",
-  "pydantic"
+  "pydantic",
+  "email-validator>=2.3.0",
+  "bcrypt>=5.0.0",
 ]

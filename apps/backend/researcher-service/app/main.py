@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers.auth import router as auth_router
 from app.routers.data_access import router as data_access_router
 from app.routers.router import router as consent_router  # Consent-aware data router
+from app.routers.sessions import router as sessions_router  # Research sessions
 from app.database import Base, engine
 from app.core.config import settings
 
@@ -35,18 +36,10 @@ app.add_middleware(
 )
 
 # Include routers
-<<<<<<< Updated upstream
 app.include_router(auth_router, prefix=settings.api_v1_prefix)
 app.include_router(data_access_router, prefix=settings.api_v1_prefix)
 app.include_router(consent_router, prefix=settings.api_v1_prefix)  # Advanced consent-aware router
-=======
-app.include_router(router)
-try:
-    from app.routers.eda_router import router as eda_router
-    app.include_router(eda_router)
-except Exception as e:
-    print(f"Failed to load EDA router: {e}")
->>>>>>> Stashed changes
+app.include_router(sessions_router, prefix=settings.api_v1_prefix)  # Research sessions
 
 @app.get("/")
 def root():
