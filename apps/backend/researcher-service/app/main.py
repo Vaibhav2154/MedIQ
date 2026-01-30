@@ -40,6 +40,11 @@ app.include_router(auth_router, prefix=settings.api_v1_prefix)
 app.include_router(data_access_router, prefix=settings.api_v1_prefix)
 app.include_router(consent_router, prefix=settings.api_v1_prefix)  # Advanced consent-aware router
 app.include_router(sessions_router, prefix=settings.api_v1_prefix)  # Research sessions
+try:
+    from app.routers.eda_router import router as eda_router
+    app.include_router(eda_router, prefix=settings.api_v1_prefix)
+except Exception as e:
+    print(f"Failed to load EDA router: {e}")
 
 @app.get("/")
 def root():
