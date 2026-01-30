@@ -18,10 +18,14 @@ async def upload_consent(
     # 1. Read file
     content = await file.read()
     
-    # 2. OCR logic
+    # 2. Extract text based on file type
     if file.content_type == "application/pdf":
         raw_text = ocr.extract_text_from_pdf(content)
+    elif file.content_type == "text/plain" or file.filename.endswith('.txt'):
+        # Handle plain text files directly
+        raw_text = content.decode('utf-8')
     else:
+        # Assume image and use OCR
         raw_text = ocr.extract_text_from_image(content)
     
     raw_text = ocr.normalize_text(raw_text)

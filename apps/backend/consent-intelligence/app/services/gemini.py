@@ -1,14 +1,17 @@
 from pydantic_ai import Agent
-from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.models.google import GoogleModel
+from pydantic_ai.providers.google import GoogleProvider
 import os
 from dotenv import load_dotenv
 from ..schemas.consent import InterpretedConsent
 
 load_dotenv()
 
-model = GeminiModel(
+provider = GoogleProvider(api_key=os.getenv("GOOGLE_API_KEY"))
+model = GoogleModel(
     model_name=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
 )
+
 
 agent = Agent(
     model,
