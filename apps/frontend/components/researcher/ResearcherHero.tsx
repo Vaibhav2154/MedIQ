@@ -31,15 +31,15 @@ export default function ResearcherHero() {
               for research purposes. Built on FHIR standards with automatic consent enforcement.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
-              <Link href="#get-started">
-                <button className="bg-white text-med-green px-8 py-4 rounded-2xl font-bold flex items-center gap-2 shadow-xl hover:scale-105 transition-all">
-                  Get Started <ArrowRight size={20} />
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <Link href="/researcher/signup">
+                <button className="bg-white text-med-green px-8 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-black/10 hover:bg-slate-50 transition-all flex items-center gap-3">
+                  Start Researching <ArrowRight size={20} />
                 </button>
               </Link>
-              <Link href="#api-docs">
-                <button className="bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transition-all">
-                  View API Docs
+              <Link href="/researcher/login">
+                <button className="bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all">
+                  Researcher Login
                 </button>
               </Link>
             </div>

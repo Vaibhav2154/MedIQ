@@ -1,0 +1,38 @@
+
+> mediq-frontend@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/12) ...
+   Generating static pages (3/12) 
+   Generating static pages (6/12) 
+   Generating static pages (9/12) 
+ ✓ Generating static pages (12/12)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    2.49 kB        98.5 kB
+├ ○ /_not-found                          873 B          88.2 kB
+├ ○ /client                              180 B          96.2 kB
+├ ○ /client/dashboard                    146 B          87.5 kB
+├ ○ /client/enforcement                  146 B          87.5 kB
+├ ○ /client/login                        180 B          96.2 kB
+├ ○ /client/records                      146 B          87.5 kB
+├ ○ /client/signup                       180 B          96.2 kB
+├ ○ /researcher                          7.2 kB          103 kB
+└ ○ /researcher/eda                      179 kB          266 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/117-8f03ed6663de8229.js       31.7 kB
+  ├ chunks/fd9d1056-46f255d08c358c9b.js  53.6 kB
+  └ other shared chunks (total)          1.95 kB
+
+
+○  (Static)  prerendered as static content
+
