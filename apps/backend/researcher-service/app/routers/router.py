@@ -11,7 +11,7 @@ from typing import Dict, Any
 import logging
 
 from app.database import get_db
-from app.schemas.access_request importCustom SQL with complex joins AccessRequest
+from app.schemas.access_request import AccessRequest
 from app.services import access_service
 from app.utils import token_store
 from app.services import audit
