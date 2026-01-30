@@ -14,25 +14,24 @@ export default function Navbar() {
     {
       name: 'Platform',
       items: [
-        { title: 'Consent Engine', desc: 'AI-powered policy extraction', icon: <Zap size={16} /> },
-        { title: 'Policy Enforcement', desc: 'Machine-readable digital rules', icon: <Lock size={16} /> },
-        { title: 'Audit & Compliance', desc: 'Real-time verifiable trails', icon: <Shield size={16} /> },
-        { title: 'Research Gateway', desc: 'Safe access for investigators', icon: <Terminal size={16} /> }
+        { title: 'Consent Engine', desc: 'AI-powered policy extraction', icon: <Zap size={16} />, href: '#' },
+        { title: 'Policy Enforcement', desc: 'Machine-readable digital rules', icon: <Lock size={16} />, href: '#' },
+        { title: 'Audit & Compliance', desc: 'Real-time verifiable trails', icon: <Shield size={16} />, href: '#' },
+        { title: 'Research Gateway', desc: 'Safe access for investigators', icon: <Terminal size={16} />, href: '#' }
       ]
     },
     {
       name: 'Solutions',
       items: [
-        { title: 'For Hospitals', desc: 'Automate data exchange', icon: <Building2 size={16} /> },
-        { title: 'For Researchers', desc: 'Compliant data sourcing', icon: <Microscope size={16} /> },
-        { title: 'Health Platforms', desc: 'Infrastructure integration', icon: <Database size={16} /> }
+        { title: 'For Clients', desc: 'Secure health data management', icon: <Building2 size={16} />, href: '/client' },
+        { title: 'For Researchers', desc: 'Compliant data sourcing', icon: <Microscope size={16} />, href: '/researcher' }
       ]
     },
     {
       name: 'Standards',
       items: [
-        { title: 'ABDM Alignment', desc: 'M3 & UHI', icon: <CheckCircle size={16} /> },
-        { title: 'FHIR v4.0.1', desc: 'Interoperable standards', icon: <FileText size={16} /> }
+        { title: 'ABDM Alignment', desc: 'M3 & UHI', icon: <CheckCircle size={16} />, href: '#' },
+        { title: 'FHIR v4.0.1', desc: 'Interoperable standards', icon: <FileText size={16} />, href: '#' }
       ]
     }
   ];
@@ -64,7 +63,7 @@ export default function Navbar() {
                   <div className="absolute -top-1.5 left-6 w-3 h-3 bg-white rotate-45 border-t border-l border-slate-100" />
                   <div className="flex flex-col gap-1 relative z-10">
                     {menu.items.map((item) => (
-                      <Link key={item.title} href="#" className="p-3 hover:bg-slate-50 rounded-xl transition-all group">
+                      <Link key={item.title} href={item.href} className="p-3 hover:bg-slate-50 rounded-xl transition-all group">
                         <div className="flex items-center gap-3">
                           <div className="text-med-green group-hover:scale-110 transition-transform">{item.icon}</div>
                           <div>
