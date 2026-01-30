@@ -1,7 +1,30 @@
+"use client";
+
 import Link from "next/link";
-import { Shield, ArrowRight } from "lucide-react";
+import { Shield, ArrowRight, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Simulate network delay
+    setTimeout(() => {
+      // Set dummy session
+      localStorage.setItem("user_session", JSON.stringify({
+        id: "usr_123",
+        name: "Dr. Sarah Mitchell",
+        role: "client"
+      }));
+      router.push("/client/dashboard");
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
@@ -15,7 +38,7 @@ export default function LoginPage() {
           <p className="mt-2 text-sm text-slate-500">Access your MedTrust dashboard</p>
         </div>
 
-        <form className="mt-8 space-y-6">
+        <form onSubmit={handleLogin} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-slate-700">Email Address</label>
@@ -24,6 +47,7 @@ export default function LoginPage() {
                 required
                 className="w-full mt-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-med-green focus:border-transparent outline-none transition-all"
                 placeholder="doctor@hospital.com"
+                defaultValue="doctor@hospital.com"
               />
             </div>
             <div>
@@ -33,12 +57,17 @@ export default function LoginPage() {
                 required
                 className="w-full mt-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-med-green focus:border-transparent outline-none transition-all"
                 placeholder="••••••••"
+                defaultValue="password123"
               />
             </div>
           </div>
 
-          <button className="w-full py-4 bg-med-green text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-opacity-90 transition-all shadow-lg shadow-med-green/20">
-            Sign In <ArrowRight size={18} />
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-4 bg-med-green text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-opacity-90 transition-all shadow-lg shadow-med-green/20 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isLoading ? <Loader2 className="animate-spin" size={20} /> : <>Sign In <ArrowRight size={18} /></>}
           </button>
         </form>
 

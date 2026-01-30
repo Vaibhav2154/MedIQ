@@ -1,7 +1,30 @@
+"use client";
+
 import Link from "next/link";
-import { User, Building2, ShieldCheck } from "lucide-react";
+import { User, Building2, ShieldCheck, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SignupPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Simulate network delay
+    setTimeout(() => {
+      // Set dummy session
+      localStorage.setItem("user_session", JSON.stringify({
+        id: "usr_123",
+        name: "New Client",
+        role: "client"
+      }));
+      router.push("/client/dashboard");
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4">
       <div className="max-w-xl w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-slate-100">
@@ -10,7 +33,7 @@ export default function SignupPage() {
           <p className="mt-2 text-sm text-slate-500">Join the secure medical data network</p>
         </div>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSignup} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-slate-700">First Name</label>
@@ -31,14 +54,18 @@ export default function SignupPage() {
           </div>
 
           <div className="flex items-start gap-2 py-2">
-            <input type="checkbox" className="mt-1 accent-med-green" id="terms" />
+            <input type="checkbox" className="mt-1 accent-med-green" id="terms" required />
             <label htmlFor="terms" className="text-xs text-slate-500 leading-relaxed">
               I agree to the MedTrust Data Processing Agreement and HIPAA Compliance standards.
             </label>
           </div>
 
-          <button className="w-full py-4 bg-med-green text-white rounded-xl font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2">
-            <ShieldCheck size={20} /> Sign Up
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-4 bg-med-green text-white rounded-xl font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isLoading ? <Loader2 className="animate-spin" size={20} /> : <><ShieldCheck size={20} /> Sign Up</>}
           </button>
         </form>
 
