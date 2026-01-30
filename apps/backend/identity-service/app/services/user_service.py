@@ -2,50 +2,13 @@
 User service for business logic related to users.
 """
 import uuid
-import bcrypt
 from typing import Optional
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status
 from app.models.user import User
 from app.schemas.user import UserCreate
-
-
-def hash_password(password: str) -> str:
-    """
-    Hash a password using bcrypt.
-    
-    Bcrypt has a maximum password length of 72 bytes.
-    Passwords longer than this are truncated.
-    
-    Args:
-        password: Plain text password
-        
-    Returns:
-        Hashed password
-    """
-    # Encode password and truncate to 72 bytes for bcrypt
-    password_bytes = password.encode('utf-8')[:72]
-    # Generate salt and hash
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password_bytes, salt)
-    return hashed.decode('utf-8')
-
-
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """
-    Verify a password against a hash.
-    
-    Args:
-        plain_password: Plain text password
-        hashed_password: Hashed password
-        
-    Returns:
-        True if password matches, False otherwise
-    """
-    password_bytes = plain_password.encode('utf-8')[:72]
-    hashed_bytes = hashed_password.encode('utf-8')
-    return bcrypt.checkpw(password_bytes, hashed_bytes)
+from app.services.auth_service import AuthService
 
 
 async def create_user(db: AsyncSession, user_data: UserCreate) -> User:
@@ -70,12 +33,14 @@ async def create_user(db: AsyncSession, user_data: UserCreate) -> User:
             detail=f"User with email {user_data.email} already exists"
         )
     
-    # Hash password
-    password_hash = hash_password(user_data.password)
+    # Hash password using AuthService
+    password_hash = AuthService.get_password_hash(user_data.password)
     
     # Create user
     user = User(
         email=user_data.email,
+        first_name=user_data.first_name,
+        last_name=user_data.last_name,
         role=user_data.role,
         password_hash=password_hash
     )

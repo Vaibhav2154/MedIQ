@@ -3,11 +3,12 @@ User API endpoints.
 """
 import uuid
 from typing import Optional
-from fastapi import APIRouter, Depends, Header, status
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
-from app.schemas.user import UserCreate, UserRead
+from app.schemas.user import UserCreate, UserRead, UserLogin, Token
 from app.services import user_service, audit_service
+from app.services.auth_service import AuthService
 
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -68,3 +69,31 @@ async def get_user(
     """
     user = await user_service.get_user_by_id(db, user_id)
     return UserRead.model_validate(user)
+
+
+@router.post(
+    "/login",
+    response_model=Token,
+    summary="User login",
+    description="Authenticate a user and return a JWT access token."
+)
+async def login(
+    user_login: UserLogin,
+    db: AsyncSession = Depends(get_db)
+) -> Token:
+    """
+    Authenticate a user and return an access token.
+    
+    - **email**: User's email address
+    - **password**: User's password
+    """
+    user = await AuthService.authenticate_user(db, user_login.email, user_login.password)
+    
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    return AuthService.create_access_token(data={"sub": str(user.id), "role": user.role.value})

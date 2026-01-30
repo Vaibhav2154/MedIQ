@@ -39,6 +39,16 @@ class User(Base, UUIDMixin, TimestampMixin):
         nullable=False
     )
     
+    first_name: Mapped[str] = mapped_column(
+        String(100),
+        nullable=True
+    )
+    
+    last_name: Mapped[str] = mapped_column(
+        String(100),
+        nullable=True
+    )
+    
     role: Mapped[UserRole] = mapped_column(
         Enum(UserRole, native_enum=False, length=50),
         nullable=False
